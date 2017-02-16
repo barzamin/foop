@@ -1,0 +1,13 @@
+{
+  "name": "foop",
+  "version": "1.0.0",
+  "description": "A nice selfbot for discord that Follows The Rules",
+  "main": "index.js",
+  "repository": "https://github.com/barzamin/foop.git",
+  "author": "Erin (barzamin) <erin@mirakuru.hacked.jp>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.0.0",
+    "lodash": "^4.17.4"
+  }
+}
