@@ -7,7 +7,12 @@
   "author": "Erin (barzamin) <erin@mirakuru.hacked.jp>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.3",
     "discord.js": "^11.0.0",
+    "escape-string-regexp": "^1.0.5",
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "debug": "^2.6.1"
   }
 }
