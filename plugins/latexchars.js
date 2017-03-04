@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const spliceString = require('splice-string');
 const escapeStringRegexp = require('escape-string-regexp');
 const latexchars = require('./latexchars.json');
 
@@ -8,25 +9,27 @@ class LatexChars {
 	constructor(options) {
 		this.prefix = options.prefix;
 
-		this.substitutions = _.entries(latexchars).map(([name, char]) => {
-			return [new RegExp(escapeStringRegexp(this.prefix+name)+'(?=\\s|$|\\\\)', 'g'),
-				char];
-		});
-		
 		this.handlers = this.generateHandlers()
 	}
 
 	generateHandlers() {
 
 		return [[
-			(m) => m.content.match(/\\\w+/ig),
+			(m) => m.content.match(/\\[\w\^]+/ig),
 			(m, bot) => {
-				let m_new = m.content;
-				for (const [regex, char] of this.substitutions) {
-					m_new = m_new.replace(regex, char);
+				const re = /\\([\w\^]+)(?=\s|$|[\\\(\)\[\],\."])/g;
+				let match, matches = [];
+				while((match = re.exec(m.content)) !== null) {
+					matches.push(match);
 				}
-				if (m_new !== m.content)
-					m.edit(m_new);
+
+				let new_m = m.content;
+				for (const match of _.sortBy(matches, 'index').reverse()) {
+					new_m = spliceString(new_m, match.index, match[0].length,
+						_.get(latexchars, match[1], match[0]));
+				}
+
+				m.edit(new_m);
 			}
 		]];
 	}
