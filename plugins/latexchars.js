@@ -2,20 +2,22 @@ const _ = require('lodash');
 const spliceString = require('splice-string');
 const escapeStringRegexp = require('escape-string-regexp');
 const latexchars = require('./latexchars.json');
+const {restrictSelf} = require('../util');
 
 const debug = require('debug')('latexchars');
 
 class LatexChars {
-	constructor(options) {
+	constructor(client, options) {
+		this.client = client;
+
 		this.prefix = options.prefix;
 
 		this.handlers = this.generateHandlers()
 	}
 
 	generateHandlers() {
-
 		return [[
-			(m) => m.content.match(/\\[\w\^]+/ig),
+			(m) => m.content.match(/\\[\w\^]+/ig) && restrictSelf(m, this.client),
 			(m, bot) => {
 				const re = /\\([\w\^]+)(?=\s|$|[\\\(\)\[\],\."])/g;
 				let match, matches = [];
