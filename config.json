@@ -1,6 +1,12 @@
 {
 	"prefix": "$",
 	"plugins": {
-		"latexchars": {"prefix": "\\"}
+		"latexchars": {"prefix": "\\"},
+		"userlog": {
+			"users": [
+				"219209493681143809",
+				"191627281595236352"
+			]
+		}
 	}
 }
