@@ -4,7 +4,7 @@ const escapeStringRegexp = require('escape-string-regexp');
 const latexchars = require('./latexchars.json');
 const {restrictSelf} = require('../util');
 
-const debug = require('debug')('latexchars');
+const debug = require('debug')('plugin-latexchars');
 
 class LatexChars {
 	constructor(client, options) {

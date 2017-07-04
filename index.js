@@ -13,16 +13,15 @@ client.on('ready', () => {
 	N_channels = ${client.channels.size}, N_users = ${client.users.size}`);
 
 	_.forOwn(config.plugins, (opts, plug) => {
+		console.log(`Loading plugin ${plug}`);
 		const plugin_ = require(`./plugins/${plug}`);
-		const plugin = new plugin_(opts);
+		const plugin = new plugin_(client, opts);
 
 		handlers = handlers.concat(plugin.handlers);
 	});
 });
 
 client.on('message', m => {
-	if (m.author.id !== client.user.id) return;
-
 	for (const [trigger, action] of handlers) {
 		if (trigger(m)) {
 			action(m, client);
@@ -32,7 +31,7 @@ client.on('message', m => {
 
 client.on('error', console.error);
 client.on('warn', console.warn);
-client.on('disconnect', console.warn);
+client.on('disconnect', () => process.exit());
 
 client.login(config.token);
 

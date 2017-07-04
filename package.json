@@ -11,6 +11,9 @@
     "discord.js": "^11.0.0",
     "escape-string-regexp": "^1.0.5",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "node-schedule": "^1.2.1",
+    "parse-duration": "^0.1.1",
     "splice-string": "^2.0.0"
   },
   "devDependencies": {
